@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22T10:12:48.129825+00:00",
+  "generated_at": "2026-04-22T10:54:32.508588+00:00",
   "points_config": {
     "exercises": {
       "ex01": {
@@ -124,7 +124,7 @@
           "message": "No grader for ex10 yet"
         }
       },
-      "last_updated": "2026-04-22T10:12:48.129509+00:00",
+      "last_updated": "2026-04-22T10:54:32.225122+00:00",
       "status": "ok",
       "total_xp": 10,
       "breakdown": [
@@ -213,7 +213,7 @@
       "rank": 1
     },
     {
-      "username": "urmsandeep",
+      "username": "afrinmtp",
       "exercises": {
         "ex01": {
           "passed": false,
@@ -256,7 +256,7 @@
           "message": "No grader for ex10 yet"
         }
       },
-      "last_updated": "2026-04-22T10:12:48.090884+00:00",
+      "last_updated": "2026-04-22T10:54:32.508222+00:00",
       "status": "ok",
       "total_xp": 0,
       "breakdown": [
@@ -342,6 +342,137 @@
         }
       ],
       "rank": 2
+    },
+    {
+      "username": "urmsandeep",
+      "exercises": {
+        "ex01": {
+          "passed": false,
+          "message": "No model.pkl or model.joblib found in exercises/ex01/"
+        },
+        "ex02": {
+          "passed": false,
+          "message": "No grader for ex02 yet"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "No grader for ex03 yet"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "No grader for ex04 yet"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "No grader for ex05 yet"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "No grader for ex06 yet"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "No grader for ex07 yet"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "No grader for ex08 yet"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "No grader for ex09 yet"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "No grader for ex10 yet"
+        }
+      },
+      "last_updated": "2026-04-22T10:54:32.486960+00:00",
+      "status": "ok",
+      "total_xp": 0,
+      "breakdown": [
+        {
+          "exercise": "ex01",
+          "name": "Baseline Model",
+          "emoji": "\ud83c\udfaf",
+          "passed": false,
+          "xp": 0,
+          "message": "No model.pkl or model.joblib found in exercises/ex01/"
+        },
+        {
+          "exercise": "ex02",
+          "name": "Experiment Tracking",
+          "emoji": "\ud83d\udcca",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex02 yet"
+        },
+        {
+          "exercise": "ex03",
+          "name": "Multi-Metric Selection",
+          "emoji": "\u2696\ufe0f",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex03 yet"
+        },
+        {
+          "exercise": "ex04",
+          "name": "Docker Packaging",
+          "emoji": "\ud83d\udce6",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex04 yet"
+        },
+        {
+          "exercise": "ex05",
+          "name": "Hyperparameter Tuning",
+          "emoji": "\ud83c\udf9b\ufe0f",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex05 yet"
+        },
+        {
+          "exercise": "ex06",
+          "name": "FastAPI Serving",
+          "emoji": "\ud83d\ude80",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex06 yet"
+        },
+        {
+          "exercise": "ex07",
+          "name": "Logging & Monitoring",
+          "emoji": "\ud83d\udc41\ufe0f",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex07 yet"
+        },
+        {
+          "exercise": "ex08",
+          "name": "Model Versioning",
+          "emoji": "\ud83c\udff7\ufe0f",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex08 yet"
+        },
+        {
+          "exercise": "ex09",
+          "name": "Retraining Pipeline",
+          "emoji": "\ud83d\udd01",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex09 yet"
+        },
+        {
+          "exercise": "ex10",
+          "name": "End-to-End Pipeline",
+          "emoji": "\ud83c\udfc6",
+          "passed": false,
+          "xp": 0,
+          "message": "No grader for ex10 yet"
+        }
+      ],
+      "rank": 3
     }
   ]
 }
