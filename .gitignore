@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# MLflow local runs (students shouldn't commit these)
+mlruns/
+mlartifacts/
+
+# Local forks cache (grader working dir)
+/tmp/mlops_quest_forks/
+
+# But DO track these:
+!exercises/ex01/starter/quickfoods_train.csv
+!exercises/ex01/test_data/holdout.csv

@@ -1,0 +1,18 @@
+# ============================================================
+# MLOps QUEST - Student Roster
+# ============================================================
+# Each student adds themselves here via PR on day 1.
+# This is their "registration" - no login system needed.
+# Just list their GitHub username (not email, not real name).
+# ============================================================
+
+students:
+  # Example entries - replace with your actual class
+  - urmsandeep          # instructor (for testing)
+  # - alice-ml
+  # - bob-dev
+  # - priya-codes
+  # - ravi-ai
+  #
+  # Add student usernames here, one per line, with a leading dash.
+  # Students add themselves via Pull Request on day 1.

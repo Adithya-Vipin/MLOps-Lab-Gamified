@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLOps Quest — Live Leaderboard</title>
+
+<!-- Distinctive font pairing: Major Mono Display for the arcade header, JetBrains Mono for data -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=JetBrains+Mono:wght@300;400;600;800&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #07090f;
+    --bg-2: #0f1422;
+    --panel: rgba(20, 28, 48, 0.6);
+    --border: rgba(0, 255, 136, 0.15);
+    --neon: #00ff88;         /* primary terminal green */
+    --neon-dim: #00b865;
+    --magenta: #ff2e7e;      /* for "new / hot" */
+    --cyan: #00d4ff;          /* for info */
+    --gold: #ffd23f;
+    --silver: #c8d1e0;
+    --bronze: #d98f5c;
+    --text: #e8eef5;
+    --text-dim: #7a8599;
+    --grid: rgba(0, 255, 136, 0.04);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Atmospheric layered background: gradient mesh + scanlines + noise */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(255, 46, 126, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -2;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: -1;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  /* Subtle scanline overlay for CRT feel */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 3px
+    );
+    z-index: 100;
+    opacity: 0.3;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 40px 48px 80px;
+  }
+
+  /* =================== HEADER =================== */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .brand-pretitle {
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    color: var(--neon-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .brand-pretitle::before { content: "> "; color: var(--neon); }
+  .brand-pretitle .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background: var(--neon);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { to { opacity: 0; } }
+
+  h1 {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 76px;
+    line-height: 1;
+    color: var(--text);
+    letter-spacing: -2px;
+    text-shadow:
+      0 0 20px rgba(0, 255, 136, 0.4),
+      0 0 40px rgba(0, 255, 136, 0.2);
+  }
+
+  h1 .accent { color: var(--neon); }
+
+  .meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .meta-row {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .meta-row strong {
+    color: var(--neon);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--neon);
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 12px var(--neon);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* =================== PODIUM =================== */
+  .podium {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+    align-items: end;
+  }
+
+  .podium-card {
+    position: relative;
+    background: var(--panel);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .podium-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .podium-card.gold {
+    border-color: var(--gold);
+    box-shadow:
+      0 0 60px rgba(255, 210, 63, 0.15),
+      inset 0 1px 0 rgba(255, 210, 63, 0.3);
+    padding: 48px 24px;
+    transform: translateY(-20px);
+  }
+  .podium-card.gold::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .podium-card.silver {
+    border-color: var(--silver);
+    box-shadow: inset 0 1px 0 rgba(200, 209, 224, 0.2);
+  }
+  .podium-card.bronze {
+    border-color: var(--bronze);
+    box-shadow: inset 0 1px 0 rgba(217, 143, 92, 0.2);
+  }
+
+  .podium-rank {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .gold .podium-rank { color: var(--gold); text-shadow: 0 0 30px var(--gold); }
+  .silver .podium-rank { color: var(--silver); }
+  .bronze .podium-rank { color: var(--bronze); }
+
+  .podium-trophy {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .podium-user {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    word-break: break-all;
+  }
+
+  .podium-xp {
+    font-family: 'VT323', monospace;
+    font-size: 44px;
+    color: var(--neon);
+    letter-spacing: 2px;
+  }
+  .podium-xp-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* =================== MAIN TABLE =================== */
+  .section-title {
+    font-family: 'VT323', monospace;
+    font-size: 28px;
+    color: var(--neon-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::before {
+    content: "▌";
+    color: var(--neon);
+  }
+
+  .board {
+    background: var(--panel);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .board-header {
+    display: grid;
+    grid-template-columns: 80px 1fr 140px 1fr 180px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: rgba(0, 255, 136, 0.03);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 80px 1fr 140px 1fr 180px;
+    padding: 18px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    align-items: center;
+    transition: background 0.3s, transform 0.5s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+  }
+  .row:last-child { border-bottom: none; }
+  .row:hover { background: rgba(0, 255, 136, 0.04); }
+
+  .row.new-pass {
+    animation: flash-new 2s ease-out;
+  }
+  @keyframes flash-new {
+    0% { background: rgba(255, 46, 126, 0.3); }
+    100% { background: transparent; }
+  }
+
+  .rank {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 24px;
+    color: var(--text-dim);
+  }
+  .rank.top { color: var(--neon); }
+
+  .username {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    word-break: break-all;
+  }
+
+  .xp {
+    font-family: 'VT323', monospace;
+    font-size: 32px;
+    color: var(--neon);
+    letter-spacing: 2px;
+  }
+  .xp-label {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-left: 4px;
+  }
+
+  /* Exercise progress grid - one cell per exercise */
+  .progress {
+    display: flex;
+    gap: 6px;
+  }
+  .prog-cell {
+    width: 26px;
+    height: 26px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--text-dim);
+    font-weight: 600;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .prog-cell.passed {
+    background: rgba(0, 255, 136, 0.15);
+    border-color: var(--neon);
+    color: var(--neon);
+  }
+  .prog-cell.passed::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 1px solid var(--neon);
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+  }
+
+  /* Status column */
+  .status {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .status .completed {
+    color: var(--neon);
+    font-weight: 600;
+  }
+  .status .ts {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  footer a {
+    color: var(--neon-dim);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--neon-dim);
+  }
+
+  .empty {
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .empty h3 {
+    font-family: 'Major Mono Display', monospace;
+    color: var(--neon);
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  /* Responsive - it's mainly for projection but still */
+  @media (max-width: 900px) {
+    h1 { font-size: 48px; }
+    .container { padding: 24px; }
+    .podium { grid-template-columns: 1fr; }
+    .podium-card.gold { transform: none; }
+    .row, .board-header { grid-template-columns: 50px 1fr 80px; }
+    .board-col-progress, .board-col-status,
+    .row .progress, .row .status { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<div class="container">
+
+  <header>
+    <div class="brand">
+      <div class="brand-pretitle">./mlops_quest --live<span class="cursor"></span></div>
+      <h1>MLOPS <span class="accent">QUEST</span></h1>
+    </div>
+    <div class="meta">
+      <div class="meta-row"><span class="live-dot"></span>LIVE · AUTO-REFRESH <strong>20s</strong></div>
+      <div class="meta-row">STUDENTS <strong id="student-count">—</strong></div>
+      <div class="meta-row">TOTAL XP AWARDED <strong id="total-xp">—</strong></div>
+      <div class="meta-row">LAST UPDATE <strong id="last-updated">—</strong></div>
+    </div>
+  </header>
+
+  <!-- Podium: top 3 -->
+  <section id="podium-section">
+    <div class="section-title">Top Operators</div>
+    <div class="podium" id="podium"></div>
+  </section>
+
+  <!-- Full leaderboard -->
+  <section>
+    <div class="section-title">Full Leaderboard</div>
+    <div class="board">
+      <div class="board-header">
+        <div>Rank</div>
+        <div>Operator</div>
+        <div>XP</div>
+        <div class="board-col-progress">Exercises</div>
+        <div class="board-col-status">Status</div>
+      </div>
+      <div id="leaderboard"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>MLOPS QUEST · S01 · GRADER BOT v1</div>
+    <div>
+      <a href="https://github.com/urmsandeep/MLOps-Lab-Manual" target="_blank">Lab Manual</a>
+      &nbsp;·&nbsp;
+      <a href="#" id="repo-link" target="_blank">Source</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // =========================================================
+  // Live leaderboard: fetches scores.json every 20 seconds
+  // and re-renders with subtle animations on rank changes.
+  // =========================================================
+
+  const SCORES_URL = './scores.json?v=' + Date.now();
+  const REFRESH_MS = 20000;
+
+  // Track who has passed what so we can flash new passes
+  let previousPassState = new Map(); // username -> Set of passed exercise ids
+
+  async function fetchScores() {
+    try {
+      const r = await fetch('./scores.json?v=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return await r.json();
+    } catch (e) {
+      console.warn('Scores fetch failed:', e);
+      return null;
+    }
+  }
+
+  function formatTime(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    return `${hh}:${mm}:${ss}`;
+  }
+
+  function renderPodium(leaderboard) {
+    const podiumEl = document.getElementById('podium');
+    podiumEl.innerHTML = '';
+
+    // Order podium visually: 2nd, 1st, 3rd for the classic podium shape
+    const order = [1, 0, 2];
+    const classes = ['silver', 'gold', 'bronze'];
+    const trophies = ['🥈', '🏆', '🥉'];
+    const rankLabels = ['02', '01', '03'];
+
+    for (let i = 0; i < 3; i++) {
+      const idx = order[i];
+      const entry = leaderboard[idx];
+      const card = document.createElement('div');
+      card.className = `podium-card ${classes[i]}`;
+      if (!entry) {
+        card.innerHTML = `
+          <div class="podium-rank">${rankLabels[i]}</div>
+          <div class="podium-trophy">${trophies[i]}</div>
+          <div class="podium-user" style="color: var(--text-dim)">— awaiting —</div>
+          <div class="podium-xp">0</div>
+          <div class="podium-xp-label">XP</div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="podium-rank">${rankLabels[i]}</div>
+          <div class="podium-trophy">${trophies[i]}</div>
+          <div class="podium-user">${escapeHtml(entry.username)}</div>
+          <div class="podium-xp">${entry.total_xp ?? 0}</div>
+          <div class="podium-xp-label">XP</div>
+        `;
+      }
+      podiumEl.appendChild(card);
+    }
+  }
+
+  function renderLeaderboard(data) {
+    const leaderboard = data.leaderboard || [];
+    const exConfig = data.points_config?.exercises || {};
+    const exIds = Object.keys(exConfig);
+
+    // Top stats
+    document.getElementById('student-count').textContent = leaderboard.length;
+    document.getElementById('total-xp').textContent =
+      leaderboard.reduce((sum, s) => sum + (s.total_xp || 0), 0);
+    document.getElementById('last-updated').textContent = formatTime(data.generated_at);
+
+    // Podium
+    renderPodium(leaderboard);
+
+    // Full table
+    const board = document.getElementById('leaderboard');
+    board.innerHTML = '';
+
+    if (leaderboard.length === 0) {
+      board.innerHTML = `
+        <div class="empty">
+          <h3>NO OPERATORS ONLINE</h3>
+          <p>Waiting for students to register and push their first commits...</p>
+        </div>
+      `;
+      return;
+    }
+
+    for (const entry of leaderboard) {
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      // Detect new passes vs previous state
+      const prevPassed = previousPassState.get(entry.username) || new Set();
+      const currentPassed = new Set();
+      const passedExercises = [];
+      for (const [exId, r] of Object.entries(entry.exercises || {})) {
+        if (r.passed) {
+          currentPassed.add(exId);
+          passedExercises.push(exId);
+        }
+      }
+      const hasNewPass = [...currentPassed].some(x => !prevPassed.has(x));
+      if (hasNewPass && prevPassed.size > 0) row.classList.add('new-pass');
+      previousPassState.set(entry.username, currentPassed);
+
+      // Build exercise progress cells
+      let progressHtml = '<div class="progress">';
+      for (const exId of exIds) {
+        const passed = currentPassed.has(exId);
+        const emoji = exConfig[exId]?.emoji || '•';
+        const num = exId.replace('ex', '');
+        progressHtml += `<div class="prog-cell ${passed ? 'passed' : ''}" title="${escapeHtml(exConfig[exId]?.name || exId)}">${passed ? emoji : num}</div>`;
+      }
+      progressHtml += '</div>';
+
+      const completedCount = currentPassed.size;
+      const totalCount = exIds.length;
+
+      const rank = entry.rank || '—';
+      const rankDisplay = String(rank).padStart(2, '0');
+
+      row.innerHTML = `
+        <div class="rank ${rank <= 3 ? 'top' : ''}">#${rankDisplay}</div>
+        <div class="username">${escapeHtml(entry.username)}</div>
+        <div class="xp">${entry.total_xp || 0}<span class="xp-label">XP</span></div>
+        ${progressHtml}
+        <div class="status">
+          <span class="${completedCount > 0 ? 'completed' : ''}">${completedCount} / ${totalCount} SHIPPED</span>
+          <span class="ts">${formatTime(entry.last_updated)}</span>
+        </div>
+      `;
+      board.appendChild(row);
+    }
+  }
+
+  function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  async function tick() {
+    const data = await fetchScores();
+    if (data) renderLeaderboard(data);
+  }
+
+  // Set the footer source link to the current repo based on URL
+  (function setSourceLink() {
+    const host = location.hostname; // e.g. urmsandeep.github.io
+    const path = location.pathname.split('/').filter(Boolean);
+    if (host.endsWith('.github.io') && path.length > 0) {
+      const user = host.split('.')[0];
+      const repo = path[0];
+      document.getElementById('repo-link').href = `https://github.com/${user}/${repo}`;
+    } else {
+      document.getElementById('repo-link').href = 'https://github.com/';
+    }
+  })();
+
+  // Initial render + polling
+  tick();
+  setInterval(tick, REFRESH_MS);
+</script>
+
+</body>
+</html>

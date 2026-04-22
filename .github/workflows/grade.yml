@@ -1,0 +1,62 @@
+name: 🎮 Grade Student Submissions
+
+on:
+  schedule:
+    # Runs every 2 minutes during active hours (UTC)
+    # Adjust to match your class timezone if needed
+    - cron: '*/2 * * * *'
+  workflow_dispatch:  # Allow manual trigger from Actions tab
+  push:
+    branches: [main]
+    paths:
+      - 'students.yml'
+      - 'graders/**'
+      - '.github/workflows/grade.yml'
+
+# Prevent overlapping runs - if a grade run is still going, skip
+concurrency:
+  group: grading
+  cancel-in-progress: false
+
+jobs:
+  grade:
+    # This workflow only runs in the instructor's main repo, not in student forks.
+    # Students forking won't accidentally run this and burn no one's quota.
+    if: github.repository_owner == github.event.repository.owner.login && !github.event.repository.fork
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout grader repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r graders/requirements.txt
+
+      - name: Run grader across all students
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python graders/run_all.py
+
+      - name: Commit updated scores
+        run: |
+          git config user.name "MLOps Quest Bot"
+          git config user.email "bot@mlops-quest.local"
+          git add docs/scores.json docs/history.json
+          if git diff --staged --quiet; then
+            echo "No score changes, skipping commit."
+          else
+            git commit -m "🎮 Update scores [skip ci]"
+            git push
+          fi

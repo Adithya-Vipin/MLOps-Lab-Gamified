@@ -1,0 +1,76 @@
+# ============================================================
+# MLOps QUEST - Points Configuration
+# ============================================================
+# The scoring system is designed to reward:
+#  1. COMPLETION  - base points for shipping working code
+#  2. SPEED       - bonus for being first (drives urgency)
+#  3. QUALITY     - bonus for getting it right first time
+#  4. CONSISTENCY - streak bonus for 3 exercises in a row
+#  5. RISK        - boss battles worth big points
+# ============================================================
+
+# Base points per exercise (reflects difficulty)
+exercises:
+  ex01:
+    name: "Baseline Model"
+    base: 10
+    emoji: "🎯"
+  ex02:
+    name: "Experiment Tracking"
+    base: 10
+    emoji: "📊"
+  ex03:
+    name: "Multi-Metric Selection"
+    base: 15
+    emoji: "⚖️"
+  ex04:
+    name: "Docker Packaging"
+    base: 20
+    emoji: "📦"
+  ex05:
+    name: "Hyperparameter Tuning"
+    base: 20
+    emoji: "🎛️"
+  ex06:
+    name: "FastAPI Serving"
+    base: 20
+    emoji: "🚀"
+  ex07:
+    name: "Logging & Monitoring"
+    base: 15
+    emoji: "👁️"
+  ex08:
+    name: "Model Versioning"
+    base: 15
+    emoji: "🏷️"
+  ex09:
+    name: "Retraining Pipeline"
+    base: 20
+    emoji: "🔁"
+  ex10:
+    name: "End-to-End Pipeline"
+    base: 30
+    emoji: "🏆"
+
+# Bonus multipliers - these make the game fun
+bonuses:
+  first_blood: 5      # First student to pass each exercise
+  podium_2nd: 3       # Second to pass
+  podium_3rd: 2       # Third to pass
+  flawless: 2         # Passed on first push (no failed CI attempts)
+  streak_3: 5         # Three exercises passed consecutively in one session
+
+# Boss challenges - unlocked mid-course by instructor
+bosses:
+  drift_boss:
+    name: "THE DRIFT AWAKENS"
+    description: "Data drift detected. Catch it. Retrain. Redeploy."
+    points: 20
+    unlocks_after: "ex07"
+  final_boss:
+    name: "PRODUCTION MELTDOWN"
+    description: "Your model is failing in prod. Full incident response."
+    points: 25
+    unlocks_after: "ex10"
+
+# Total possible: 175 (exercises) + ~50 (bonuses) + 45 (bosses) = 270 XP

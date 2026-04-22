@@ -1,0 +1,815 @@
+{
+  "generated_at": "2026-04-22T06:21:12.922476+00:00",
+  "points_config": {
+    "exercises": {
+      "ex01": {
+        "name": "Baseline Model",
+        "base": 10,
+        "emoji": "\ud83c\udfaf"
+      },
+      "ex02": {
+        "name": "Experiment Tracking",
+        "base": 10,
+        "emoji": "\ud83d\udcca"
+      },
+      "ex03": {
+        "name": "Multi-Metric Selection",
+        "base": 15,
+        "emoji": "\u2696\ufe0f"
+      },
+      "ex04": {
+        "name": "Docker Packaging",
+        "base": 20,
+        "emoji": "\ud83d\udce6"
+      },
+      "ex05": {
+        "name": "Hyperparameter Tuning",
+        "base": 20,
+        "emoji": "\ud83c\udf9b\ufe0f"
+      },
+      "ex06": {
+        "name": "FastAPI Serving",
+        "base": 20,
+        "emoji": "\ud83d\ude80"
+      },
+      "ex07": {
+        "name": "Logging & Monitoring",
+        "base": 15,
+        "emoji": "\ud83d\udc41\ufe0f"
+      },
+      "ex08": {
+        "name": "Model Versioning",
+        "base": 15,
+        "emoji": "\ud83c\udff7\ufe0f"
+      },
+      "ex09": {
+        "name": "Retraining Pipeline",
+        "base": 20,
+        "emoji": "\ud83d\udd01"
+      },
+      "ex10": {
+        "name": "End-to-End Pipeline",
+        "base": 30,
+        "emoji": "\ud83c\udfc6"
+      }
+    },
+    "bonuses": {
+      "first_blood": 5,
+      "podium_2nd": 3,
+      "podium_3rd": 2,
+      "flawless": 2,
+      "streak_3": 5
+    },
+    "bosses": {
+      "drift_boss": {
+        "name": "THE DRIFT AWAKENS",
+        "description": "Data drift detected. Catch it. Retrain. Redeploy.",
+        "points": 20,
+        "unlocks_after": "ex07"
+      },
+      "final_boss": {
+        "name": "PRODUCTION MELTDOWN",
+        "description": "Your model is failing in prod. Full incident response.",
+        "points": 25,
+        "unlocks_after": "ex10"
+      }
+    }
+  },
+  "leaderboard": [
+    {
+      "username": "priya-kumar",
+      "total_xp": 182,
+      "rank": 1,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex06": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex07": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex08": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex09": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T05:36:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "ravi-shankar",
+      "total_xp": 143,
+      "rank": 2,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex06": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex07": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T05:43:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "ananya-s",
+      "total_xp": 128,
+      "rank": 3,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex06": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T05:59:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "arjun-dev",
+      "total_xp": 115,
+      "rank": 4,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex06": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:03:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "meera-ml",
+      "total_xp": 98,
+      "rank": 5,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:06:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "kiran-codes",
+      "total_xp": 75,
+      "rank": 6,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:09:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "deepa-ai",
+      "total_xp": 68,
+      "rank": 7,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:13:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "vikram-k",
+      "total_xp": 52,
+      "rank": 8,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:16:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "sneha-ops",
+      "total_xp": 45,
+      "rank": 9,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:18:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "rohit-builds",
+      "total_xp": 30,
+      "rank": 10,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:20:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "pooja-ships",
+      "total_xp": 28,
+      "rank": 11,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:21:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "aditya-r",
+      "total_xp": 15,
+      "rank": 12,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:21:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "nisha-v",
+      "total_xp": 12,
+      "rank": 13,
+      "exercises": {
+        "ex01": {
+          "passed": true,
+          "message": "Passed"
+        },
+        "ex02": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:21:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "karthik-s",
+      "total_xp": 0,
+      "rank": 14,
+      "exercises": {
+        "ex01": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex02": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:21:12.922476+00:00",
+      "status": "ok"
+    },
+    {
+      "username": "lakshmi-d",
+      "total_xp": 0,
+      "rank": 15,
+      "exercises": {
+        "ex01": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex02": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex03": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex04": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex05": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex06": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex07": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex08": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex09": {
+          "passed": false,
+          "message": "Not yet attempted"
+        },
+        "ex10": {
+          "passed": false,
+          "message": "Not yet attempted"
+        }
+      },
+      "last_updated": "2026-04-22T06:21:12.922476+00:00",
+      "status": "ok"
+    }
+  ]
+}
